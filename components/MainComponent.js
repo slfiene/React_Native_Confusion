@@ -12,6 +12,21 @@ import {
   SafeAreaView
 } from "react-navigation";
 import { Icon, withTheme } from "react-native-elements";
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+    return {
+
+    }
+  }
+
+const mapDispatchToProps = dispatch => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders())
+})
 
 const MenuNavigator = createStackNavigator(
   {
@@ -200,6 +215,14 @@ contentComponent: CustomDrawerContentComponent }
 );
 
 class Main extends Component {
+
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchLeaders();
+    this.props.fetchPromos();
+  }
+
   render() {
     return (
       <View
@@ -240,4 +263,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
