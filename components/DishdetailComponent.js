@@ -165,7 +165,7 @@ class DishDetail extends Component {
             <Rating
               type="star"
               ratingCount={5}
-              showRating="true"
+              showRating = {true}
               minValue={1}
               onFinishRating={this.handleRating}
             />
