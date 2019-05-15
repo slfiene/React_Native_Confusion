@@ -254,6 +254,20 @@ const MainNavigator = createDrawerNavigator(
         )
       }
     },
+    Favorites:
+    {screen: FavoritesNavigator,
+    navigationOptions: {
+      title: 'My Favorites',
+      drawerLabel: 'My Favorites',
+      drawerIcon: ({tintColor, focused}) => (
+        <Icon
+          name='heard'
+          type='font-awesome'
+          size={24}
+          color={tintColor}
+          />
+        )
+    }},
     Reservation: {
       screen: ReservationNavigator,
       navigationOptions: {
@@ -268,21 +282,7 @@ const MainNavigator = createDrawerNavigator(
           />
         )
       }
-    },
-    Favorites:
-    {screen: FavoritesNavigator,
-    navigationOptions: {
-      title: 'My Favorites',
-      drawerLabel: 'My Favorites',
-      drawerIcon: ({tintColor, focused}) => (
-        <Icon
-          name='heard'
-          type='font-awesome'
-          size={24}
-          color={tintColor}
-          />
-        )
-    }}
+    }
   },
   { drawerBackgroundColor: "#D1C4E9",
 contentComponent: CustomDrawerContentComponent }
