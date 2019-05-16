@@ -5,7 +5,10 @@ import {
   ScrollView,
   FlatList,
   Modal,
-  StyleSheet
+  StyleSheet,
+  Button,
+  Alert,
+  PanResponder
 } from "react-native";
 import { Card, Icon, Rating, Input, Button } from "react-native-elements";
 import { connect } from "react-redux";
