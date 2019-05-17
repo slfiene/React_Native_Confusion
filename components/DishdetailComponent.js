@@ -6,11 +6,10 @@ import {
   FlatList,
   Modal,
   StyleSheet,
-  Button,
   Alert,
   PanResponder
 } from "react-native";
-import { Card, Icon, Rating, Input } from "react-native-elements";
+import { Card, Icon, Rating, Input, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { postFavorite } from "../redux/ActionCreators";
@@ -36,6 +35,13 @@ function RenderDish(props) {
 
   handleViewRef = ref => this.view = ref;
 
+  const recognizeComment = ({moxeX, moveY, dx, dy}) => {
+    if (dx > -200)
+      return true;
+    else
+      return false;
+  };
+
   const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
     if ( dx < -200 )
         return true;
@@ -49,7 +55,7 @@ const panResponder = PanResponder.create({
   onPanResponderGrant: () => {this.view.rubberBand(1000).then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));},
   onPanResponderEnd: (e, gestureState) => {
       console.log("pan responder end", gestureState);
-      if (recognizeDrag(gestureState))
+      if (recognizeDrag(gestureState)) {
           Alert.alert(
               'Add  to Favorite?',
               'Are you sure you wish to add ' + dish.name + ' to favorite?',
@@ -59,8 +65,10 @@ const panResponder = PanResponder.create({
               ],
               { cancelable: false }
           );
-
       return true;
+      } else if (recognizeComment(gestureState)) {
+        props.toggleModal();
+      }
   }
 })
 
