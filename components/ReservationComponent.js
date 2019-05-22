@@ -43,12 +43,15 @@ class Reservation extends Component {
             },
             {
               text: "OK",
-              onPress: () => this.resetForm()
+              onPress: () => {
+                this.presentLocalNotification(this.state.date);
+                this.resetForm();
+              }
             })
           ],
         { cancelable: false }
       );
-  }
+  } 
 
   resetForm() {
     this.setState({
