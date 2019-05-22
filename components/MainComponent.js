@@ -295,7 +295,7 @@ const MainNavigator = createDrawerNavigator(
       drawerLabel: 'My Favorites',
       drawerIcon: ({tintColor, focused}) => (
         <Icon
-          name='heard'
+          name='heart'
           type='font-awesome'
           size={24}
           color={tintColor}
