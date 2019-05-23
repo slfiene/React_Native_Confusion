@@ -5,7 +5,7 @@ import { SecureStore, Permissions, ImagePicker } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 
-class Login extends Component {
+class LoginTab extends Component {
 
     constructor(props) {
         super(props);
@@ -252,15 +252,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         margin: 20,
     },
+    imageContainer:
+    {
+        flex:1,
+        flexDirection: 'row',
+        margin: 20
+    },
+    image: {
+        margin: 10,
+        width: 80,
+        height: 60
+    },
     formInput: {
-        margin: 40
+        margin: 20
     },
     formCheckbox: {
-        margin: 40,
+        margin: 20,
         backgroundColor: null
     },
     formButton: {
         margin: 60
+    }
+});
+
+const Login = createBottomTabNavigator({
+    Login: LoginTab,
+    Register: RegisterTab
+}, {
+    tabBarOptions: {
+        activeBackgroundColor: '#9575CD',
+        inactiveBackgroundColor: '#D1C4E9',
+        activeTintColor: '#ffffff',
+        inactiveTintColor: 'gray'
     }
 });
 
