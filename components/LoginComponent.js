@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Button, StyleSheet , Text, ScrollView, Image} from 'react-native';
 import { Icon, Input, CheckBox } from 'react-native-elements';
-import { SecureStore, Permissions, ImagePicker } from 'expo';
+import { SecureStore, Permissions, ImagePicker, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -54,7 +54,7 @@ class LoginTab extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <Input
                     placeholder="Username"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
@@ -110,7 +110,7 @@ class LoginTab extends Component {
                         }}
                         />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 
@@ -147,6 +147,18 @@ class RegisterTab extends Component {
             }
         }
 
+    }
+
+    processImage = async (imageUri) => {
+        let processedImage = await ImageManipulator.manipulateAsync(
+            imageUri,
+            [
+                {resize: {width: 400}}
+            ],
+            {format: 'png'}
+        );
+        console.log(processedImage);
+        this.setState({imageUrl: processedImage.uri});
     }
     
     static navigationOptions = {
