@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet , Text, ScrollView, Image} from 'react-native';
-import { Icon, Input, CheckBox } from 'react-native-elements';
+import { View, StyleSheet , Text, ScrollView, Image} from 'react-native';
+import { Icon, Input, CheckBox, Button } from 'react-native-elements';
 import { SecureStore, Permissions, ImagePicker, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation';
 import { baseUrl } from '../shared/baseUrl';
@@ -54,10 +54,11 @@ class LoginTab extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
                 <Input
                     placeholder="Username"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(username) => this.setState({username})}
                     value={this.state.username}
                     containerStyle={styles.formInput}
@@ -65,6 +66,7 @@ class LoginTab extends Component {
                 <Input
                     placeholder="Password"
                     leftIcon={{ type: 'font-awesome', name: 'key' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password}
                     containerStyle={styles.formInput}
@@ -85,6 +87,7 @@ class LoginTab extends Component {
                               type='font-awesome'
                               size={24}
                               color="white"
+                              containerStyle={{marginRight: 15}}
                               />
                         }
                         buttonStyle={{
@@ -103,6 +106,7 @@ class LoginTab extends Component {
                                 type='font-awesome'            
                                 size={24}
                                 color= 'blue'
+                                containerStyle={{marginRight: 15}}
                             />
                         }
                         titleStyle={{
@@ -110,7 +114,7 @@ class LoginTab extends Component {
                         }}
                         />
                 </View>
-            </ScrollView>
+            </View>
         );
     }
 
@@ -146,8 +150,16 @@ class RegisterTab extends Component {
                 this.setState({imageUrl: capturedImage.uri });
             }
         }
-
     }
+
+    getImageFromGallery = async () => {
+        let selectedImage = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4,3]
+        });   
+        this.setState({imageUrl: selectedImage.uri});
+    }
+    
 
     processImage = async (imageUri) => {
         let processedImage = await ImageManipulator.manipulateAsync(
@@ -194,10 +206,15 @@ class RegisterTab extends Component {
                         title="Camera"
                         onPress={this.getImageFromCamera}
                         />
+                    <Button
+                        title="Gallery"
+                        onPress={this.getImageFromGallery}
+                        />
                 </View>
                 <Input
                     placeholder="Username"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(username) => this.setState({username})}
                     value={this.state.username}
                     containerStyle={styles.formInput}
@@ -205,6 +222,7 @@ class RegisterTab extends Component {
                 <Input
                     placeholder="Password"
                     leftIcon={{ type: 'font-awesome', name: 'key' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password}
                     containerStyle={styles.formInput}
@@ -212,6 +230,7 @@ class RegisterTab extends Component {
                 <Input
                     placeholder="First Name"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(firstname) => this.setState({firstname})}
                     value={this.state.firstname}
                     containerStyle={styles.formInput}
@@ -219,6 +238,7 @@ class RegisterTab extends Component {
                 <Input
                     placeholder="Last Name"
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(lastname) => this.setState({lastname})}
                     value={this.state.lastname}
                     containerStyle={styles.formInput}
@@ -226,6 +246,7 @@ class RegisterTab extends Component {
                 <Input
                     placeholder="Email"
                     leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
+                    leftIconContainerStyle={styles.icon}
                     onChangeText={(email) => this.setState({email})}
                     value={this.state.email}
                     containerStyle={styles.formInput}
@@ -246,6 +267,7 @@ class RegisterTab extends Component {
                                 type='font-awesome'            
                                 size={24}
                                 color= 'white'
+                                containerStyle={{marginRight: 15}}
                             />
                         }
                         buttonStyle={{
@@ -259,6 +281,18 @@ class RegisterTab extends Component {
     }
 }
 
+const Login = createBottomTabNavigator({
+    Login: LoginTab,
+    Register: RegisterTab
+}, {
+    tabBarOptions: {
+        activeBackgroundColor: '#9575CD',
+        inactiveBackgroundColor: '#D1C4E9',
+        activeTintColor: '#ffffff',
+        inactiveTintColor: 'gray'
+    }
+});
+
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
@@ -268,7 +302,8 @@ const styles = StyleSheet.create({
     {
         flex:1,
         flexDirection: 'row',
-        margin: 20
+        margin: 20,
+        justifyContent: 'space-around'
     },
     image: {
         margin: 10,
@@ -282,21 +317,16 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: null
     },
+    icon:{
+        marginRight: 16
+    },
     formButton: {
-        margin: 60
+        marginLeft: 60,
+        marginTop: 30,
+        marginRight: 60
     }
 });
 
-const Login = createBottomTabNavigator({
-    Login: LoginTab,
-    Register: RegisterTab
-}, {
-    tabBarOptions: {
-        activeBackgroundColor: '#9575CD',
-        inactiveBackgroundColor: '#D1C4E9',
-        activeTintColor: '#ffffff',
-        inactiveTintColor: 'gray'
-    }
-});
+
 
 export default Login;
