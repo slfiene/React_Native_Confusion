@@ -12,7 +12,7 @@ import {
 
 import DatePicker from "react-native-datepicker";
 import * as Animatable from "react-native-animatable";
-import { Permissions, Notifications } from 'expo';
+import { Permissions, Notifications, Calendar } from 'expo';
 
 class Reservation extends Component {
   constructor(props) {
@@ -45,13 +45,40 @@ class Reservation extends Component {
               text: "OK",
               onPress: () => {
                 this.presentLocalNotification(this.state.date);
+                this.addReservationToCalendar(this.state.date)
                 this.resetForm();
               }
             })
           ],
         { cancelable: false }
       );
+  }
+
+  obtainCalendarPermission = async () => {
+    const calendarPermission = await Permissions.askAsync(Permissions.CALENDAR);
+
+    if (calendarPermission.status !== 'granted') {
+      Alert.alert('Calendar Access not granted!');
+    }
+    return calendarPermission;
   } 
+
+
+    addReservationToCalendar = async (date) =>{
+      await this.obtainCalendarPermission();
+
+      let sTime = new Date(Date.parse(date));
+      let eTime = new Date(Date.parse((date) + (2*60*60*1000)));
+
+    Calendar.createEventAsync(Calendar.DEFAULT,{
+      title: 'Con Fusion Table Reservation',
+      startDate: sTime,
+      endDate: eTime,
+      timeZone: 'Asia/Hong_Kong',
+      location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong'
+    });
+  }
+  
 
   resetForm() {
     this.setState({
