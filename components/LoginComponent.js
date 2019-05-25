@@ -69,6 +69,7 @@ class LoginTab extends Component {
                     leftIconContainerStyle={styles.icon}
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password}
+                    secureTextEntry={true}
                     containerStyle={styles.formInput}
                     />
                 <CheckBox title="Remember Me"
@@ -225,6 +226,7 @@ class RegisterTab extends Component {
                     leftIconContainerStyle={styles.icon}
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password}
+                    secureTextEntry={true}
                     containerStyle={styles.formInput}
                     />
                 <Input
